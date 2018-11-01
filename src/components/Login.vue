@@ -29,9 +29,10 @@
 					password: this.password
 				},
 				success: (response) => {
-					console.log(response.data.attributes.auth_token),
-					alert("Вход выполнен"),
+					console.log(response.data.attributes.auth_token)
+					alert("Вход выполнен")
 					sessionStorage.setItem("auth_token", response.data.attributes.auth_token)
+					this.$router.push({name: "home"})
 					
 				},
 				error: (response) => {
