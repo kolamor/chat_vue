@@ -3,8 +3,8 @@
 		<input v-model="login" type="text" placeholder="Логин"/>
 		<input v-model="password" type="password" placeholder="Пароль"/>
 		<button @click="setLogin">Войти</button>
-		</br>
-		{{login}} - {{password}}
+		
+		
 	</div>
 </template>
 
