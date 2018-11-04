@@ -1,17 +1,32 @@
 <template>
-	<div>
-		<div v-for="dialog in dialogs">
-			<h2>{{dialog.user.username}}</h2>
-			<p>{{dialog.text}}</p>
-			<span>{{dialog.date}}</span>
-		</div>
-	</div>
+	<mu-col span="8" xl="9">
+		<mu-container class="dialog">
+			<mu-row v-for="dialog in dialogs"
+					direction="column"
+					justify-content="start"
+					align-items="end">
+				
+				<p><strong>{{dialog.user.username}}</strong></p>
+				<p>{{dialog.text}}</p>
+				<span>{{dialog.date}}</span>
+			</mu-row>
+		</mu-container>
+		<mu-container>
+			<mu-row>	
+
+	      		<mu-text-field v-model="form.textarea" multi-line :rows="4" full-width placeholder="Введите текст"> 
+	      				
+	      		</mu-text-field>
+	      		<mu-button round color="success">Отправить</mu-button>
+	    		
+			</mu-row>
+		</mu-container>
+	</mu-col>
 	
 </template>
 
 <script>
-	import $ from 'jquery'
-	
+		
 	export default {
 		name: "Dialog",
 		props: {
@@ -20,6 +35,9 @@
 		data() {
 			return {
 				dialogs: '',
+				form: {
+					textarea: '',
+				}
 
 			}
 		},
@@ -54,8 +72,7 @@
 
 <style scoped>
 	.dialog{
-		width: 70%;
-		height: 100px;
+		
 		border: 1px solid #000;
 	}
 	

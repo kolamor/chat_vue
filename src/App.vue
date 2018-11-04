@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
   //created(){
   //    if(localStorage.getItem("auth_token")) {
   //        $.ajaxSetup({
