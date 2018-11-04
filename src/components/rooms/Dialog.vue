@@ -1,11 +1,13 @@
 <template>
 	<mu-col span="8" xl="9">
+		<AddUsers></AddUsers>
 		<mu-container class="dialog">
 			<mu-row v-for="dialog in dialogs"
 					direction="column"
 					justify-content="start"
-					align-items="end">
-				
+					align-items="end"
+					:key="dialog.id">
+
 				<p><strong>{{dialog.user.username}}</strong></p>
 				<p>{{dialog.text}}</p>
 				<span>{{dialog.date}}</span>
@@ -17,7 +19,7 @@
 	      		<mu-text-field v-model="form.textarea" multi-line :rows="4" full-width placeholder="Введите текст"> 
 	      				
 	      		</mu-text-field>
-	      		<mu-button round color="success">Отправить</mu-button>
+	      		<mu-button class="btn-send" round color="success" @click="sendMes">Отправить</mu-button>
 	    		
 			</mu-row>
 		</mu-container>
@@ -26,11 +28,15 @@
 </template>
 
 <script>
+	import AddUsers from './AddUsers'
 		
 	export default {
 		name: "Dialog",
 		props: {
 			id: '',
+		},
+		components: {
+			AddUsers
 		},
 		data() {
 			return {
@@ -45,7 +51,10 @@
 			$.ajaxSetup({
            		headers: {'Authorization': "Token " + sessionStorage.getItem('auth_token')},
           	});
-          	this.loadDialog()
+          	setInterval(() => {
+          		this.loadDialog()
+          	},5000)
+          	
 		},
 		methods: {
 			loadDialog() {
@@ -61,7 +70,22 @@
 					}
 				})
 			},
-			openDialog(id){
+			sendMes(){
+				$.ajax({
+					url: "http://127.0.0.1:8000/api/v1/chat/dialog/",
+					type: "POST",
+					data: {
+						room: this.id,
+						text: this.form.textarea
+
+					},
+					success: (response) => {
+						this.loadDialog()
+					},
+					error:(response) => {
+						alert(response.statusText)
+					}
+				})
 
 			}
 		}
